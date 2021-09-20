@@ -14,7 +14,7 @@ CHAT_ID = os.getenv('CHAT_ID')
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    sport = datetime.time(18, 7, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(18, 10, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(21, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", t)
@@ -35,6 +35,4 @@ def purchase_trading(context):
 
 u = Updater(TOKEN, use_context=True)
 u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
-
-if(__name__ == "__main__"): 
-    u.start_polling()
+u.start_polling()
