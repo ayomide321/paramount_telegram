@@ -14,7 +14,7 @@ app = Flask(__name__)
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    sport = datetime.time(18, 38, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(18, 55, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(21, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", sport)
@@ -32,13 +32,15 @@ def purchase_sports(context):
 def purchase_trading(context):
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
+
+@app.before_first_request
 def startup_function():
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
     u.start_polling()
 
-@app.before_first_request(startup_function)
+
 
 
 if(__name__ == "__main__"):
-    app.run(debug=True)
+	app.run(debug=True)
