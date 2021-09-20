@@ -22,6 +22,8 @@ def daily_job(update, context):
 def purchase(context):
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
 
-u = Updater(TOKEN, use_context=True)
-u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
-u.start_polling()
+
+if(__name__ == "__main__"):
+    u = Updater(TOKEN, use_context=True)
+    u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
+    u.start_polling()
