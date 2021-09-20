@@ -11,7 +11,6 @@ TOKEN = os.getenv('API_KEY')
 CHAT_ID = os.getenv('CHAT_ID')
 app = Flask(__name__)
 
-
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
@@ -35,7 +34,7 @@ def purchase_trading(context):
 
 
 
-@server.route("/")
+@app.route("/")
 def start():
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
