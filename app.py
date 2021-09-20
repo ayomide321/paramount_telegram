@@ -14,13 +14,13 @@ app = Flask(__name__)
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    sport = datetime.time(18, 27, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(18, 35, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(21, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    print("Time its supposed to post", t)
+    print("Time its supposed to post", sport)
     print("Time right now:", datetime.datetime.now())
-    context.job_queue.run_daily(purchase_forex, test, days=tuple(range(5)), context=update)
-    context.job_queue.run_daily(purchase_sports, test, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_forex, forex, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_sports, sport, days=tuple(range(5)), context=update)
     context.job_queue.run_daily(purchase_trading, trading, days=tuple(range(5)), context=update)
 
 def purchase_forex(context):
@@ -33,12 +33,8 @@ def purchase_trading(context):
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
 
-
-@app.route("/")
-def start():
+if(__name__ == "__main__"):
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
     u.start_polling()
-
-if(__name__ == "__main__"):
-	app.run(debug=True)
+    app.run(debug=True)
