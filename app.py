@@ -40,5 +40,5 @@ def start():
     u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
     u.start_polling()
 
-if(__name__ == "__main__"): 
-    app.run(debug=True)
+if(__name__ == "__main__"):
+	app.run(debug=True)
