@@ -14,7 +14,7 @@ CHAT_ID = os.getenv('CHAT_ID')
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    t = datetime.time(17, 2, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    t = datetime.time(17, 45, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", t)
     print("Time right now:", datetime.datetime.now())
     context.job_queue.run_daily(purchase, t, days=tuple(range(5)), context=update)
