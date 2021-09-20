@@ -17,7 +17,7 @@ def daily_job(update, context):
     context.job_queue.run_daily(purchase, t, days=tuple(range(5)), context=update)
 
 def purchase(context):
-    context.bot.send_message(chat_id=CHAT_ID, text="Purchase a paramount subscription!")
+    context.bot.send_message(chat_id=CHAT_ID, text="Emjoy our services? Click <a href="">here</a> to purchase a Paramoutn forex subscription!", parse_mode=ParseMode.HTML)
 
 u = Updater(TOKEN, use_context=True)
 u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
