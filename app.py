@@ -14,16 +14,27 @@ CHAT_ID = os.getenv('CHAT_ID')
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    t = datetime.time(17, 45, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(18, 5, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    forex = datetime.time(21, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", t)
     print("Time right now:", datetime.datetime.now())
-    context.job_queue.run_daily(purchase, t, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_forex, test, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_sports, test, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_trading, trading, days=tuple(range(5)), context=update)
 
-def purchase(context):
+def purchase_forex(context):
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
 
+def purchase_sports(context):
+    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!", parse_mode=ParseMode.HTML)
 
-if(__name__ == "__main__"):
-    u = Updater(TOKEN, use_context=True)
-    u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
+def purchase_trading(context):
+    context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
+
+
+u = Updater(TOKEN, use_context=True)
+u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
+
+if(__name__ == "__main__"): 
     u.start_polling()
