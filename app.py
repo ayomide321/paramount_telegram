@@ -32,9 +32,13 @@ def purchase_sports(context):
 def purchase_trading(context):
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
-
-if(__name__ == "__main__"):
+def startup_function():
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
     u.start_polling()
+
+@app.before_first_request(startup_function)
+
+
+if(__name__ == "__main__"):
     app.run(debug=True)
