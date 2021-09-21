@@ -15,9 +15,9 @@ app = Flask(__name__)
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    sport = datetime.time(21, 25, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(11, 25, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    forex = datetime.time(21, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    forex = datetime.time(18, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", sport)
     print("Time right now:", datetime.datetime.now())
     context.job_queue.run_daily(purchase_forex, forex, days=tuple(range(5)), context=update)
@@ -37,7 +37,9 @@ def purchase_trading(context):
 @app.before_first_request
 def startup_function():
     u = Updater(TOKEN, use_context=True)
-    u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
+    u.dispatcher.add_handler(CommandHandler('start', daily_job))
+    u.dispatcher.add_handler(CommandHandler('forex', purchase_forex))
+    u.dispatcher.add_handler(CommandHandler('trading', purchase_trading))
     u.start_polling()
     u.idle()
 
