@@ -24,13 +24,13 @@ def daily_job(update, context):
     context.job_queue.run_daily(purchase_sports, sport, days=tuple(range(5)), context=update)
     context.job_queue.run_daily(purchase_trading, trading, days=tuple(range(5)), context=update)
 
-def purchase_forex(context):
+def purchase_forex(update, context):
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
 
-def purchase_sports(context):
+def purchase_sports(update, context):
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!", parse_mode=ParseMode.HTML)
 
-def purchase_trading(context):
+def purchase_trading(update, context):
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
 
