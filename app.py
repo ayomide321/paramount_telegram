@@ -20,9 +20,9 @@ def daily_job(update, context):
     forex = datetime.time(18, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", sport)
     print("Time right now:", datetime.datetime.now())
-    context.job_queue.run_daily(purchase_forex, forex, days=tuple(range(5)), context=update)
-    context.job_queue.run_daily(purchase_sports, sport, days=tuple(range(5)), context=update)
-    context.job_queue.run_daily(purchase_trading, trading, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_forex(update, context), forex, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_sports(update, context), sport, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_trading(update, context), trading, days=tuple(range(5)), context=update)
 
 def purchase_forex(update, context):
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
