@@ -39,6 +39,7 @@ def startup_function():
     u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
     u.dispatcher.run_async(daily_job)
     u.start_polling()
+    updater.idle()
 
 
 
