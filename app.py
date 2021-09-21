@@ -11,10 +11,11 @@ TOKEN = os.getenv('API_KEY')
 CHAT_ID = os.getenv('CHAT_ID')
 app = Flask(__name__)
 
+@app.before_first_request
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    sport = datetime.time(19, 15, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(19, 17, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(21, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", sport)
@@ -37,7 +38,6 @@ def purchase_trading(context):
 def startup_function():
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('purchase', daily_job))
-    u.dispatcher.run_async(daily_job)
     u.start_polling()
     u.idle()
 
