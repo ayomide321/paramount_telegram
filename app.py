@@ -3,13 +3,20 @@ from telegram import bot, ParseMode
 import os
 import datetime
 import pytz
+import logging
 from dotenv import load_dotenv
 from flask import Flask
 load_dotenv()
 
-TOKEN = os.getenv('API_KEY')
+TOKEN = os.environ.get('API_KEY')
 CHAT_ID = os.getenv('CHAT_ID')
-app = Flask(__name__)
+PORT = int(os.environ.get('PORT', '8443'))
+
+# Enable logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 
 def daily_job(update, context):
@@ -33,18 +40,28 @@ def purchase_sports(update, context):
 def purchase_trading(update, context):
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
+def error(update, context):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-@app.before_first_request
-def startup_function():
+
+
+
+
+def main():
+
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('start', daily_job))
-    u.dispatcher.add_handler(CommandHandler('forex', purchase_forex))
-    u.dispatcher.add_handler(CommandHandler('trading', purchase_trading))
-    u.start_polling()
-    u.idle()
+    u.dispatcher.add_error_handler(error)
 
+    # Start the Bot
+    updater.start_webhook(listen="0.0.0.0",
+                          port=PORT,
+                          url_path=TOKEN)
+    # updater.bot.set_webhook(url=settings.WEBHOOK_URL)
+    updater.bot.set_webhook("paramount-telegram" + TOKEN)
 
-
-
-if(__name__ == "__main__"):
-	app.run(host='0.0.0.0')
+    # Run the bot until you press Ctrl-C or the process receives SIGINT,
+    # SIGTERM or SIGABRT. This should be used most of the time, since
+    # start_polling() is non-blocking and will stop the bot gracefully.
+    updater.idle()
