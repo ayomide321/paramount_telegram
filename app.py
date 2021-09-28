@@ -21,9 +21,9 @@ logger = logging.getLogger(__name__)
 
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
-    sport = datetime.time(15, 5, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    forex = datetime.time(18, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(15, 12, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    trading = datetime.time(15, 13, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    forex = datetime.time(15, 14, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post sport", sport)
     print("Time its supposed to post trading", trading)
     print("Time its supposed to post forex", forex)
@@ -55,7 +55,7 @@ def error(update, context):
 def main():
 
     u = Updater(TOKEN, use_context=True)
-    u.dispatcher.add_handler(CommandHandler('start', daily_job))
+    u.dispatcher.add_handler(CommandHandler('start', daily_job, pass_job_queue=True))
     u.dispatcher.add_error_handler(error)
 
     # Start the Bot
