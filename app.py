@@ -25,19 +25,24 @@ def daily_job(update, context):
     sport = datetime.time(15, 5, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(18, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    print("Time its supposed to post", sport)
-    print("Time right now:", datetime.datetime.now())
+    print("Time its supposed to post sport", sport)
+    print("Time its supposed to post trading", trading)
+    print("Time its supposed to post forex", forex)
+    print("Time right now:", datetime.datetime(tzinfo=pytz.timezone('America/Chicago')).now())
     context.job_queue.run_daily(purchase_forex(update, context), forex, days=tuple(range(7)), context=update)
     context.job_queue.run_daily(purchase_sports(update, context), sport, days=tuple(range(7)), context=update)
     context.job_queue.run_daily(purchase_trading(update, context), trading, days=tuple(range(7)), context=update)
 
 def purchase_forex(update, context):
+    print('running forex')
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
 
 def purchase_sports(update, context):
+    print('running sports')
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!", parse_mode=ParseMode.HTML)
 
 def purchase_trading(update, context):
+    print('running trading')
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://www.pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
 def error(update, context):
