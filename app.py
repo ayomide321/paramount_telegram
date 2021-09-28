@@ -21,14 +21,13 @@ logger = logging.getLogger(__name__)
 
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
-    context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
     sport = datetime.time(15, 5, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(18, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post sport", sport)
     print("Time its supposed to post trading", trading)
     print("Time its supposed to post forex", forex)
-    print("Time right now:", datetime.datetime(tzinfo=pytz.timezone('America/Chicago')).now())
+    context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
     context.job_queue.run_daily(purchase_forex(update, context), forex, days=tuple(range(7)), context=update)
     context.job_queue.run_daily(purchase_sports(update, context), sport, days=tuple(range(7)), context=update)
     context.job_queue.run_daily(purchase_trading(update, context), trading, days=tuple(range(7)), context=update)
