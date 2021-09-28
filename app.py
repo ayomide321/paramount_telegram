@@ -22,23 +22,23 @@ logger = logging.getLogger(__name__)
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    sport = datetime.time(11, 25, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(15, 5, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(18, 00, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post", sport)
     print("Time right now:", datetime.datetime.now())
-    context.job_queue.run_daily(purchase_forex(update, context), forex, days=tuple(range(5)), context=update)
-    context.job_queue.run_daily(purchase_sports(update, context), sport, days=tuple(range(5)), context=update)
-    context.job_queue.run_daily(purchase_trading(update, context), trading, days=tuple(range(5)), context=update)
+    context.job_queue.run_daily(purchase_forex(update, context), forex, days=tuple(range(7)), context=update)
+    context.job_queue.run_daily(purchase_sports(update, context), sport, days=tuple(range(7)), context=update)
+    context.job_queue.run_daily(purchase_trading(update, context), trading, days=tuple(range(7)), context=update)
 
 def purchase_forex(update, context):
-    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
+    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
 
 def purchase_sports(update, context):
-    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!", parse_mode=ParseMode.HTML)
+    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!", parse_mode=ParseMode.HTML)
 
 def purchase_trading(update, context):
-    context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
+    context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://www.pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
 def error(update, context):
     """Log Errors caused by Updates."""
