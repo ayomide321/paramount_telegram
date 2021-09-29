@@ -21,9 +21,9 @@ logger = logging.getLogger(__name__)
 
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
-    sport = datetime.time(11, 30, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    trading = datetime.time(9, 30, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    forex = datetime.time(9, 18, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(19, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    trading = datetime.time(15, 30, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    forex = datetime.time(18, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post sport", sport)
     print("Time its supposed to post trading", trading)
     print("Time its supposed to post forex", forex)
@@ -57,6 +57,20 @@ def main():
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('start', daily_job, pass_job_queue=True))
     u.dispatcher.add_error_handler(error)
+
+    """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
+    sport = datetime.time(19, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    trading = datetime.time(15, 30, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    forex = datetime.time(18, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    print("Time its supposed to post sport", sport)
+    print("Time its supposed to post trading", trading)
+    print("Time its supposed to post forex", forex)
+    #u.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
+    u.job_queue.run_daily(purchase_forex, forex, days=tuple(range(7)))
+    u.job_queue.run_daily(purchase_sports, sport, days=tuple(range(7)))
+    u.job_queue.run_daily(purchase_trading, trading, days=tuple(range(7)))
+
+
     # Start the Bot
     u.start_webhook(listen="0.0.0.0",
                           port=PORT,
