@@ -18,6 +18,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+sub_text = "<br>Instagram: <a href='https://www.instagram.com/tradewithparamount'>TradeWithParamount</a><br>Twitter: <a href='https://www.twitter.com/tradewparamount'>TradeWParamount</a>"
+
 
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
@@ -34,15 +36,15 @@ def daily_job(update, context):
 
 def purchase_forex(context):
     print('running forex')
-    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
+    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!" + sub_text, parse_mode=ParseMode.HTML)
 
 def purchase_sports(context):
     print('running sports')
-    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!", parse_mode=ParseMode.HTML)
+    context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!" + sub_text, parse_mode=ParseMode.HTML)
 
 def purchase_trading(context):
     print('running trading')
-    context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://www.pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
+    context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://www.pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!" + sub_text, parse_mode=ParseMode.HTML)
 
 def error(update, context):
     """Log Errors caused by Updates."""
