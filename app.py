@@ -18,7 +18,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-sub_text = "<br>Instagram: <a href='https://www.instagram.com/tradewithparamount'>TradeWithParamount</a><br>Twitter: <a href='https://www.twitter.com/tradewparamount'>TradeWParamount</a>"
+sub_text = "\nInstagram: <a href='https://www.instagram.com/tradewithparamount'>TradeWithParamount</a>\nTwitter: <a href='https://www.twitter.com/tradewparamount'>TradeWParamount</a>"
 
 
 def daily_job(update, context):
