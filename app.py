@@ -21,26 +21,26 @@ logger = logging.getLogger(__name__)
 
 def daily_job(update, context):
     """ Running on Mon, Tue, Wed, Thu, Fri = tuple(range(5)) """
-    sport = datetime.time(15, 12, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    trading = datetime.time(15, 13, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
-    forex = datetime.time(15, 14, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    sport = datetime.time(11, 30, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    trading = datetime.time(9, 30, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    forex = datetime.time(9, 18, 10, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post sport", sport)
     print("Time its supposed to post trading", trading)
     print("Time its supposed to post forex", forex)
     context.bot.send_message(chat_id=CHAT_ID, text='Activating daily paramount notification!')
-    context.job_queue.run_daily(purchase_forex(update, context), forex, days=tuple(range(7)), context=update)
-    context.job_queue.run_daily(purchase_sports(update, context), sport, days=tuple(range(7)), context=update)
-    context.job_queue.run_daily(purchase_trading(update, context), trading, days=tuple(range(7)), context=update)
+    context.job_queue.run_daily(purchase_forex, forex, days=tuple(range(7)), context=update)
+    context.job_queue.run_daily(purchase_sports, sport, days=tuple(range(7)), context=update)
+    context.job_queue.run_daily(purchase_trading, trading, days=tuple(range(7)), context=update)
 
-def purchase_forex(update, context):
+def purchase_forex(context):
     print('running forex')
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/forex'>here</a> to purchase a Paramount forex subscription!", parse_mode=ParseMode.HTML)
 
-def purchase_sports(update, context):
+def purchase_sports(context):
     print('running sports')
     context.bot.send_message(chat_id=CHAT_ID, text="Enjoy our services? Click <a href='https://www.pstrading.online/sports'>here</a> to purchase a Paramount sports subscription!", parse_mode=ParseMode.HTML)
 
-def purchase_trading(update, context):
+def purchase_trading(context):
     print('running trading')
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://www.pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!", parse_mode=ParseMode.HTML)
 
@@ -57,7 +57,6 @@ def main():
     u = Updater(TOKEN, use_context=True)
     u.dispatcher.add_handler(CommandHandler('start', daily_job, pass_job_queue=True))
     u.dispatcher.add_error_handler(error)
-
     # Start the Bot
     u.start_webhook(listen="0.0.0.0",
                           port=PORT,
