@@ -6,6 +6,7 @@ import pytz
 import logging
 from dotenv import load_dotenv
 from flask import Flask
+import feedparser
 load_dotenv()
 
 TOKEN = os.environ.get('API_KEY')
@@ -46,6 +47,10 @@ def purchase_trading(context):
     print('running trading')
     context.bot.send_message(chat_id=CHAT_ID, text="Well thats the end of the trading day. Click <a href='https://www.pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!" + sub_text, parse_mode=ParseMode.HTML)
 
+def purchase_trading_morning(context):
+    print('running trading')
+    context.bot.send_message(chat_id=CHAT_ID, text="Good Morning! We hope you have a good day. Click <a href='https://www.pstrading.online/trading'>here</a> to purchase a Paramount trading subscription!" + sub_text, parse_mode=ParseMode.HTML)
+
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -64,6 +69,9 @@ def main():
     sport = datetime.time(19, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
     trading = datetime.time(15, 30, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
     forex = datetime.time(18, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    morning_1 = datetime.time(9, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    morning_2 = datetime.time(9, 30, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
+    morning_3 = datetime.time(10, 00, 00, 000000, tzinfo=pytz.timezone('America/Chicago'))
     print("Time its supposed to post sport", sport)
     print("Time its supposed to post trading", trading)
     print("Time its supposed to post forex", forex)
@@ -71,6 +79,9 @@ def main():
     u.job_queue.run_daily(purchase_forex, forex, days=tuple(range(7)))
     u.job_queue.run_daily(purchase_sports, sport, days=tuple(range(7)))
     u.job_queue.run_daily(purchase_trading, trading, days=tuple(range(7)))
+    u.job_queue.run_daily(purchase_forex, morning_3, days=tuple(range(7)))
+    u.job_queue.run_daily(purchase_sports, morning_1, days=tuple(range(7)))
+    u.job_queue.run_daily(purchase_trading_morning, morning_2, days=tuple(range(7)))
 
 
     # Start the Bot
