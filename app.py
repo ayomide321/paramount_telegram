@@ -6,7 +6,6 @@ import pytz
 import logging
 from dotenv import load_dotenv
 from flask import Flask
-import feedparser
 load_dotenv()
 
 TOKEN = os.environ.get('API_KEY')
